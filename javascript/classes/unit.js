@@ -9,6 +9,7 @@ var Unit = function(unitname, type, soldiers, leader, color) {
   	this.position = null;
   	this.destination = null;
     this.player_color = color;
+    this.speed = 2.0;
 }
 
 Unit.prototype.Firepower = function(){

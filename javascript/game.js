@@ -139,15 +139,14 @@ function getUnits(players) {
 function GameWait(unit, destination) {
 	$(document).ready(function() {
 		$("#board_surface").on('click', function(event) {
-			console.log("YAY!!!!");
 			unit.destination = destination;
 			var canvas = document.getElementById("board_surface");
 			var ctx = canvas.getContext("2d");
 			var x = unit.position.x;
 			var y = unit.position.y;
-			var dx = 1;
-			var dy = 1;
-
+			var dx = unit.speed * Math.sin(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+			var dy = unit.speed * Math.cos(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+			debugger
 			function drawInfantry() {
 			    ctx.beginPath();
 			    ctx.arc(x, y, 20, 0, Math.PI*2);

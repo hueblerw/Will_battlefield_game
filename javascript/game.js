@@ -20,7 +20,12 @@ function GameLogic() {
 	var units = getUnits(players);
 
 	// Wait for clicks upon the units.
-	GameWait();
+	destination = new Coordinates(150, 250);
+	GameWait(units[0], destination);
+
+	// Move the red circle across the screen.
+	
+	MoveToDestination();
 }
 
 // Initialization methods
@@ -36,11 +41,11 @@ function GeneratePlayers(board) {
 	players.push(new Player("Player 1", "red"));
 	players.push(new Player("Player 2", "blue"));
 	var leader = new Leader("Gus", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
-	var unit = new Unit("Red Infantry", "infantry", 2500, leader);
+	var unit = new Unit("Red Infantry", "infantry", 2500, leader, "red");
 	unit.position = new Coordinates(25, 25);
 	players[0].units.push(unit);
 	leader = new Leader("Sarah", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
-	unit = new Unit("Blue Infantry", "infantry", 2500, leader);
+	unit = new Unit("Blue Infantry", "infantry", 2500, leader, "blue");
 	unit.position = new Coordinates((board.Width() - 1) * 50 + 25, (board.Height() - 1) * 50 + 25);
 	players[1].units.push(unit);
 	return players;
@@ -131,10 +136,44 @@ function getUnits(players) {
 // Game Event Watching
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function GameWait() {
+function GameWait(unit, destination) {
 	$(document).ready(function() {
 		$("#board_surface").on('click', function(event) {
 			console.log("YAY!!!!");
+			unit.destination = destination;
+			var canvas = document.getElementById("board_surface");
+			var ctx = canvas.getContext("2d");
+			var x = unit.position.x;
+			var y = unit.position.y;
+			var dx = 1;
+			var dy = 1;
+
+			function drawInfantry() {
+			    ctx.beginPath();
+			    ctx.arc(x, y, 20, 0, Math.PI*2);
+			    ctx.fillStyle = unit.player_color;
+			    ctx.fill();
+			    ctx.closePath();
+			}
+
+			function draw() {
+			    ctx.clearRect(0, 0, canvas.width, canvas.height);
+			    drawInfantry();
+			    x += dx;
+			    y += dy;
+			}
+
+			setInterval(draw, 50);
 		});
 	});
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Game Moving Units
+//////////////////////////////////////////////////////////////////////////////////////////
+
+function MoveToDestination(unit, destination) {
+	// set the units new destination.
+	
+}
+

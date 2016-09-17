@@ -1,4 +1,4 @@
-var Unit = function(unitname, type, soldiers, leader) {
+var Unit = function(unitname, type, soldiers, leader, color) {
   	this.unitname = unitname;
   	this.type = type;
   	this.soldiers = soldiers;
@@ -8,6 +8,7 @@ var Unit = function(unitname, type, soldiers, leader) {
   	this.experience = 0;
   	this.position = null;
   	this.destination = null;
+    this.player_color = color;
 }
 
 Unit.prototype.Firepower = function(){

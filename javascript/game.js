@@ -12,6 +12,9 @@ function GameLogic() {
 
 	// Paint the background canvas.
 	DisplayBoard(game_board);
+
+	// Place the units at their locations.
+
 }
 
 // Initialization methods
@@ -41,20 +44,44 @@ function DisplayBoard(board) {
 		var ctx = backgroundCanvas.getContext("2d");
 		var x = 0;
 		var y = 0;
+		backgroundCanvas.width = board.Width() * 50;
+		backgroundCanvas.height = board.Height() * 50;
 
 		for (i = 0; i < board.Width(); i++) {
 			for (j = 0; j < board.Height(); j++){
+				// Create the background square.
 				ctx.beginPath();
 				ctx.rect(x, y, 49, 49);
-				ctx.fillStyle = "#FF0000";
+				switch (board.tiles[i][j].habitat) {
+					case "plains":
+						ctx.fillStyle = "#00FF00";
+		        		break;
+		        	case "forest":
+						ctx.fillStyle = "#228B22";
+		        		break;
+		        	case "swamp":
+						ctx.fillStyle = "#556B2F";
+		        		break;
+				}
 				ctx.fill();
 				ctx.closePath();
+
+				// Create the hills/mountains.
+				if (board.tiles[i][j].terrain === "hills"){
+					ctx.beginPath();
+					ctx.arc(x + 30, y + 35, 10, 0, Math.PI * (4/3), true);
+					ctx.fillStyle = "black";
+					ctx.arc(x + 20, y + 35, 10, 0, Math.PI, true);
+					ctx.fillStyle = "black";
+					ctx.stroke();
+					ctx.closePath();
+				}
+				
 				x += 50;
 			}
 			x = 0;
 			y += 50;
 		}
-		
 	});
 }
 

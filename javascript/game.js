@@ -20,12 +20,8 @@ function GameLogic() {
 	var units = getUnits(players);
 
 	// Wait for clicks upon the units.
-	destination = new Coordinates(125, 225);
-	GameWait(units[0], destination);
-
 	// Move the red circle across the screen.
-	
-	MoveToDestination();
+	GameWait(units[0]);
 }
 
 // Initialization methods
@@ -136,9 +132,13 @@ function getUnits(players) {
 // Game Event Watching
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function GameWait(unit, destination) {
+function GameWait(unit) {
 	$(document).ready(function() {
 		$("#board_surface").on('click', function(event) {
+			// Get coordinates of destination.
+			destination = newDestination(event);
+			debugger
+			// Setup the movement animation.
 			unit.destination = destination;
 			var orientation = unit.XOrientation();
 			var canvas = document.getElementById("board_surface");
@@ -163,6 +163,12 @@ function GameWait(unit, destination) {
 			    	x += dx;
 			    	y += dy;
 			    }
+			}
+
+			function newDestination(event) {
+				var myX = Math.floor(event.clientX / 50) * 50 + 25;
+				var myY = Math.floor(event.clientY / 50) * 50 + 25;
+				return new Coordinates(myX, myY);
 			}
 
 			setInterval(draw, 50);

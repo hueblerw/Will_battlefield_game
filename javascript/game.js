@@ -6,7 +6,7 @@ function GameLogic() {
 	var game_board = GenerateBoard(8, 8);
 
 	// Generate two player each owning a single infantry unit of 2500 men with a randomly generated leader.
-	var players = GeneratePlayers();
+	var players = GeneratePlayers(game_board);
 	var player1 = players[0];
 	var player2 = players[1];
 
@@ -14,7 +14,8 @@ function GameLogic() {
 	DisplayBoard(game_board);
 
 	// Place the units at their locations.
-
+	PlaceUnits(player1);
+	PlaceUnits(player2);
 }
 
 // Initialization methods
@@ -25,15 +26,17 @@ function GenerateBoard(x, y) {
 	return board;
 }
 
-function GeneratePlayers() {
+function GeneratePlayers(board) {
 	var players = [];
 	players.push(new Player("Player 1", "red"));
 	players.push(new Player("Player 2", "blue"));
 	var leader = new Leader("Gus", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
 	var unit = new Unit("Red Infantry", "infantry", 2500, leader);
+	unit.position = new Coordinates(25, 25);
 	players[0].units.push(unit);
 	leader = new Leader("Sarah", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
 	unit = new Unit("Blue Infantry", "infantry", 2500, leader);
+	unit.position = new Coordinates((board.Width() - 1) * 50 + 25, (board.Height() - 1) * 50 + 25);
 	players[1].units.push(unit);
 	return players;
 }
@@ -95,6 +98,22 @@ function DisplayBoard(board) {
 	});
 }
 
+function PlaceUnits(player) {
+	$(document).ready(function(){
+		var canvas = document.getElementById("board_surface");
+		var ctx = canvas.getContext("2d");
+		var troops = player.units;
+
+		for (i = 0; i < troops.length; i++){
+			ctx.beginPath();
+			ctx.arc(troops[i].position.x, troops[i].position.y, 20, 0, Math.PI*2, false);
+			ctx.fillStyle = player.color;
+			ctx.fill();
+			ctx.closePath();
+		}
+		
+	});
+}
 
 
 

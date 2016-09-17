@@ -16,6 +16,7 @@
   <script src="javascript/classes/player.js"></script>
   <script src="javascript/classes/tile.js"></script>
   <script src="javascript/classes/unit.js"></script>
+  <script src="javascript/classes/coordinates.js"></script>
   <script src="javascript/game.js"></script>
 </head>
 <body>
@@ -23,17 +24,6 @@
     <canvas id="board_background" width="500" height="500"></canvas>
     <canvas id="board_surface" width="600" height="600"></canvas>
   </div>
-
-  <script>
-	var canvas = document.getElementById("board_surface");
-	var ctx = canvas.getContext("2d");
-
-	ctx.beginPath();
-	ctx.arc(240, 160, 20, 0, Math.PI*2, false);
-	ctx.fillStyle = "red";
-	ctx.fill();
-	ctx.closePath();
-  </script>
 
 </body>
 </html>

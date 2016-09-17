@@ -26,3 +26,7 @@ Tile.prototype.MovementCost = function(){
 
 	return base;
 }
+
+Tile.prototype.printSquare = function(){
+	return this.terrain.charAt(0).toUpperCase() + "-" + this.habitat.charAt(0).toUpperCase();
+}

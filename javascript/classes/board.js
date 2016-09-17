@@ -5,7 +5,7 @@ var Board = function(x, y) {
 	for (i=0; i < y; i++){
 		var tileRow = [];
 	  	for (j = 0; j < x; j++){
-	  		var num = Math.random() * 10;
+	  		var num = Math.floor(Math.random() * 10);
 	  		if (num === 10){
 	  			terrain = "mountains"
 	  		} else if(num > 8){

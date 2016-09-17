@@ -9,6 +9,7 @@ function GameLogic() {
 	var players = GeneratePlayers();
 	var player1 = players[0];
 	var player2 = players[1];
+	debugger;
 }
 
 // Initialization methods
@@ -23,10 +24,10 @@ function GeneratePlayers() {
 	var players = [];
 	players.push(new Player("Player 1", "red"));
 	players.push(new Player("Player 2", "blue"));
-	var leader = new Leader("Gus", Math.random() * 12, Math.random() * 12, 0);
+	var leader = new Leader("Gus", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
 	var unit = new Unit("Red Infantry", "infantry", 2500, leader);
 	players[0].units.push(unit);
-	leader = new Leader("Sarah", Math.random() * 12, Math.random() * 12, 0);
+	leader = new Leader("Sarah", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
 	unit = new Unit("Blue Infantry", "infantry", 2500, leader);
 	players[1].units.push(unit);
 	return players;

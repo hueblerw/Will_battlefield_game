@@ -9,7 +9,6 @@ function GameLogic() {
 	var players = GeneratePlayers();
 	var player1 = players[0];
 	var player2 = players[1];
-	debugger;
 }
 
 // Initialization methods

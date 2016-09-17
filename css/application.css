@@ -1,3 +1,9 @@
-canvas { 
-	background: #eee; 
+canvas#board_background { 
+	background: #1aff1a; 
+	position: fixed;
+}
+
+canvas#board_surface {
+	position: fixed;
+	background: transparent; 
 }

@@ -9,6 +9,9 @@ function GameLogic() {
 	var players = GeneratePlayers();
 	var player1 = players[0];
 	var player2 = players[1];
+
+	// Paint the background canvas.
+	DisplayBoard(game_board);
 }
 
 // Initialization methods
@@ -32,6 +35,28 @@ function GeneratePlayers() {
 	return players;
 }
 
+function DisplayBoard(board) {
+	$(document).ready(function(){
+		var backgroundCanvas = document.getElementById("board_background");
+		var ctx = backgroundCanvas.getContext("2d");
+		var x = 0;
+		var y = 0;
+
+		for (i = 0; i < board.Width(); i++) {
+			for (j = 0; j < board.Height(); j++){
+				ctx.beginPath();
+				ctx.rect(x, y, 49, 49);
+				ctx.fillStyle = "#FF0000";
+				ctx.fill();
+				ctx.closePath();
+				x += 50;
+			}
+			x = 0;
+			y += 50;
+		}
+		
+	});
+}
 
 
 

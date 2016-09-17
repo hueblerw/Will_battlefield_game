@@ -20,30 +20,18 @@
 </head>
 <body>
   <div id="board_container">
-    <canvas id="board_background" width="500", length="500"></canvas>
-    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <canvas id="board_background" width="500" height="500"></canvas>
+    <canvas id="board_surface" width="600" height="600"></canvas>
   </div>
 
   <script>
-	var canvas = document.getElementById("myCanvas");
+	var canvas = document.getElementById("board_surface");
 	var ctx = canvas.getContext("2d");
 
 	ctx.beginPath();
-	ctx.rect(20, 40, 50, 50);
-	ctx.fillStyle = "#FF0000";
-	ctx.fill();
-	ctx.closePath();
-
-	ctx.beginPath();
 	ctx.arc(240, 160, 20, 0, Math.PI*2, false);
-	ctx.fillStyle = "green";
+	ctx.fillStyle = "red";
 	ctx.fill();
-	ctx.closePath();
-
-	ctx.beginPath();
-	ctx.rect(160, 10, 100, 40);
-	ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
-	ctx.stroke();
 	ctx.closePath();
   </script>
 

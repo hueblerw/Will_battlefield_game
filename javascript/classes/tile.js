@@ -1,13 +1,14 @@
-var Tile = function() {
-  this.terrain = terrain;
-  this.habitat = habitat;
+var Tile = function(terrain, habitat) {
+  	this.terrain = terrain;
+  	this.habitat = habitat;
 }
 
 Tile.prototype.MovementCost = function(){
   	var base = 1.0;
+
   	switch(this.habitat) {
 	    case "forest":
-	        base = 1.4;
+	        base = 1.2;
 	        break;
 	    case "swamp":
 	        base = 1.8;
@@ -22,4 +23,10 @@ Tile.prototype.MovementCost = function(){
 	        base *= 3.0;
 	        break;
 	}
+
+	return base;
+}
+
+Tile.prototype.printSquare = function(){
+	return this.terrain.charAt(0).toUpperCase() + "-" + this.habitat.charAt(0).toUpperCase();
 }

@@ -20,14 +20,14 @@ var Board = function(x, y) {
 }
 
 Board.prototype.Width = function(){
-	return tiles[0].length;
+	return this.tiles[0].length;
 }
 
 Board.prototype.Height = function(){
-	return tiles.length;
+	return this.tiles.length;
 }
 
-Board.logTheBoard = function(){
+Board.prototype.logTheBoard = function(){
 	var row = "";
 	for (i = 0; i < this.Height(); i++){
 		for (j = 0; j < this.Width(); j++){

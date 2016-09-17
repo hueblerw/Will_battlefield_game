@@ -139,7 +139,6 @@ function GameWait(unit) {
 			destination = newDestination(event);
 			// Setup the movement animation.
 			unit.destination = destination;
-			var orientation = unit.XOrientation();
 			var canvas = document.getElementById("board_surface");
 			var ctx = canvas.getContext("2d");
 			var x = unit.position.x;
@@ -158,7 +157,7 @@ function GameWait(unit) {
 			function draw() {
 			    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			    drawInfantry();
-			    if (Math.sign(unit.destination.x - x) === orientation){
+			    if (Math.sign(unit.destination.x - x) === unit.XOrientation() || Math.sign(unit.destination.y - y) === unit.YOrientation()){
 			    	x += dx;
 			    	y += dy;
 			    } else {

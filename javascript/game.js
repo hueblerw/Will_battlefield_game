@@ -14,8 +14,7 @@ function GameLogic() {
 	DisplayBoard(game_board);
 
 	// Place the units at their locations.
-	PlaceUnits(player1, game_board.Width(), game_board.Height());
-	PlaceUnits(player2, game_board.Width(), game_board.Height());
+	PlaceUnits(players, game_board.Width(), game_board.Height());
 
 	// Create an array containing the things possible to select.
 	var units = getUnits(players);
@@ -104,22 +103,23 @@ function DisplayBoard(board) {
 	});
 }
 
-function PlaceUnits(player, width, height) {
+function PlaceUnits(players, width, height) {
 	$(document).ready(function(){
 		var canvas = document.getElementById("board_surface");
 		var ctx = canvas.getContext("2d");
-		var troops = player.units;
 		canvas.width = width * 50;
 		canvas.height = height * 50;
 
-		for (var i = 0; i < troops.length; i++){
-			ctx.beginPath();
-			ctx.arc(troops[i].position.x, troops[i].position.y, 20, 0, Math.PI*2, false);
-			ctx.fillStyle = player.color;
-			ctx.fill();
-			ctx.closePath();
-		}
-		
+		for (var k = 0; k < players.length; k++){
+			var troops = players[k].units;
+			for (var i = 0; i < troops.length; i++){
+				ctx.beginPath();
+				ctx.arc(troops[i].position.x, troops[i].position.y, 20, 0, Math.PI*2, false);
+				ctx.fillStyle = players[k].color;
+				ctx.fill();
+				ctx.closePath();
+			}
+		}	
 	});
 }
 

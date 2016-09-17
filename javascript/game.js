@@ -14,11 +14,14 @@ function GameLogic() {
 	DisplayBoard(game_board);
 
 	// Place the units at their locations.
-	PlaceUnits(player1);
-	PlaceUnits(player2);
+	PlaceUnits(player1, game_board.Width(), game_board.Height());
+	PlaceUnits(player2, game_board.Width(), game_board.Height());
 
 	// Create an array containing the things possible to select.
 	var units = getUnits(players);
+
+	// Wait for clicks upon the units.
+	GameWait();
 }
 
 // Initialization methods
@@ -53,8 +56,8 @@ function DisplayBoard(board) {
 		backgroundCanvas.width = board.Width() * 50;
 		backgroundCanvas.height = board.Height() * 50;
 
-		for (i = 0; i < board.Width(); i++) {
-			for (j = 0; j < board.Height(); j++){
+		for (var i = 0; i < board.Width(); i++) {
+			for (var j = 0; j < board.Height(); j++){
 				// Create the background square.
 				ctx.beginPath();
 				ctx.rect(x, y, 49, 49);
@@ -101,13 +104,15 @@ function DisplayBoard(board) {
 	});
 }
 
-function PlaceUnits(player) {
+function PlaceUnits(player, width, height) {
 	$(document).ready(function(){
 		var canvas = document.getElementById("board_surface");
 		var ctx = canvas.getContext("2d");
 		var troops = player.units;
+		canvas.width = width * 50;
+		canvas.height = height * 50;
 
-		for (i = 0; i < troops.length; i++){
+		for (var i = 0; i < troops.length; i++){
 			ctx.beginPath();
 			ctx.arc(troops[i].position.x, troops[i].position.y, 20, 0, Math.PI*2, false);
 			ctx.fillStyle = player.color;
@@ -122,4 +127,14 @@ function getUnits(players) {
 	return players[0].units.concat(players[1].units);
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Game Event Watching
+//////////////////////////////////////////////////////////////////////////////////////////
 
+function GameWait() {
+	$(document).ready(function() {
+		$("#board_surface").on('click', function(event) {
+			console.log("YAY!!!!");
+		});
+	});
+}

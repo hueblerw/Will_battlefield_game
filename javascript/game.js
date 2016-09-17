@@ -144,8 +144,8 @@ function GameWait(unit) {
 			var ctx = canvas.getContext("2d");
 			var x = unit.position.x;
 			var y = unit.position.y;
-			var dx = unit.speed * Math.cos(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
-			var dy = unit.speed * Math.sin(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+			var dx = unit.XOrientation() * unit.speed * Math.cos(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+			var dy = unit.YOrientation() * unit.speed * Math.sin(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
 
 			function drawInfantry() {
 			    ctx.beginPath();

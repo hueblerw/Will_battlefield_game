@@ -31,7 +31,7 @@ Unit.prototype.XOrientation = function() {
 }
 
 Unit.prototype.YOrientation = function() {
-  if (this.destination != null && position != null){
+  if (this.destination != null && this.position != null){
     if (this.destination.y > this.position.y){
       return 1;
     } else {

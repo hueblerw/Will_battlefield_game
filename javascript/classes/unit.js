@@ -6,6 +6,8 @@ var Unit = function(unitname, type, soldiers, leader) {
   	this.dead = 0;
   	this.leader = leader;
   	this.experience = 0;
+  	this.position = null;
+  	this.destination = null;
 }
 
 Unit.prototype.Firepower = function(){

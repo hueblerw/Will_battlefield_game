@@ -140,13 +140,14 @@ function GameWait(unit, destination) {
 	$(document).ready(function() {
 		$("#board_surface").on('click', function(event) {
 			unit.destination = destination;
+			var orientation = unit.XOrientation();
 			var canvas = document.getElementById("board_surface");
 			var ctx = canvas.getContext("2d");
 			var x = unit.position.x;
 			var y = unit.position.y;
-			var dx = unit.speed * Math.sin(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
-			var dy = unit.speed * Math.cos(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
-			debugger
+			var dx = unit.speed * Math.cos(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+			var dy = unit.speed * Math.sin(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+
 			function drawInfantry() {
 			    ctx.beginPath();
 			    ctx.arc(x, y, 20, 0, Math.PI*2);
@@ -158,8 +159,10 @@ function GameWait(unit, destination) {
 			function draw() {
 			    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			    drawInfantry();
-			    x += dx;
-			    y += dy;
+			    if (Math.sign(unit.destination.x - x) === orientation){
+			    	x += dx;
+			    	y += dy;
+			    }
 			}
 
 			setInterval(draw, 50);

@@ -19,3 +19,23 @@ Unit.prototype.Firepower = function(){
 Unit.prototype.Meleepower = function(){
 	return 1.0;
 }
+
+Unit.prototype.XOrientation = function() {
+  if (this.destination != null && this.position != null){
+    if (this.destination.x > this.position.x){
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+}
+
+Unit.prototype.YOrientation = function() {
+  if (this.destination != null && position != null){
+    if (this.destination.y > this.position.y){
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+}

@@ -137,7 +137,6 @@ function GameWait(unit) {
 		$("#board_surface").on('click', function(event) {
 			// Get coordinates of destination.
 			destination = newDestination(event);
-			debugger
 			// Setup the movement animation.
 			unit.destination = destination;
 			var orientation = unit.XOrientation();
@@ -162,6 +161,10 @@ function GameWait(unit) {
 			    if (Math.sign(unit.destination.x - x) === orientation){
 			    	x += dx;
 			    	y += dy;
+			    } else {
+			    	unit.position = unit.destination;
+			    	unit.destination = null;
+			    	clearInterval(redBall);
 			    }
 			}
 
@@ -171,7 +174,7 @@ function GameWait(unit) {
 				return new Coordinates(myX, myY);
 			}
 
-			setInterval(draw, 50);
+			var redBall = setInterval(draw, 50);
 		});
 	});
 }

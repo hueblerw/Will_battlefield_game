@@ -16,12 +16,15 @@ function GameLogic() {
 	// Place the units at their locations.
 	PlaceUnits(player1);
 	PlaceUnits(player2);
+
+	// Create an array containing the things possible to select.
+	var units = getUnits(players);
 }
 
 // Initialization methods
 
 function GenerateBoard(x, y) {
-	var board = new Board(8, 8);
+	var board = new Board(x, y);
 	board.logTheBoard();
 	return board;
 }
@@ -115,5 +118,8 @@ function PlaceUnits(player) {
 	});
 }
 
+function getUnits(players) {
+	return players[0].units.concat(players[1].units);
+}
 
 

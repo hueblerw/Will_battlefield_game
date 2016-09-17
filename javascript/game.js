@@ -75,6 +75,16 @@ function DisplayBoard(board) {
 					ctx.fillStyle = "black";
 					ctx.stroke();
 					ctx.closePath();
+				} else if(board.tiles[i][j].terrain === "mountains") {
+					ctx.beginPath();
+				    ctx.moveTo(x + 10, y + 35);
+				    ctx.lineTo(x + 20, y + 10);
+				    ctx.lineTo(x + 30, y + 35);
+				    ctx.stroke();
+				    ctx.moveTo(x + 25, y + 25);
+				    ctx.lineTo(x + 30, y + 10);
+				    ctx.lineTo(x + 40, y + 35);
+				    ctx.stroke();
 				}
 				
 				x += 50;

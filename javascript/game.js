@@ -20,7 +20,7 @@ function GameLogic() {
 	var units = getUnits(players);
 
 	// Wait for clicks upon the units.
-	destination = new Coordinates(150, 250);
+	destination = new Coordinates(125, 225);
 	GameWait(units[0], destination);
 
 	// Move the red circle across the screen.

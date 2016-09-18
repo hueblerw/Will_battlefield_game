@@ -132,6 +132,8 @@ function getUnits(players) {
 // Game Moving Units
 //////////////////////////////////////////////////////////////////////////////////////////
 
+// Note: The entire coordinate system seems to be backwards as compares x and y but at this point why bother to change that.
+
 function GameWait(units, board) {
 	$(document).ready(function() {
 		// Initialize the variables.
@@ -142,6 +144,7 @@ function GameWait(units, board) {
 		var dx = [];
 		var dy = [];
 		var unit_velocity = [];
+		var currentSquare = [];
 		var balls;
 		var selection = 0;
 
@@ -152,6 +155,7 @@ function GameWait(units, board) {
 			dx.push(null);
 			dy.push(null);
 			unit_velocity.push(0.0);
+			currentSquare.push(null);
 		}
 
 		$("#board_surface").on('click', function(event) {
@@ -161,14 +165,13 @@ function GameWait(units, board) {
 				if (balls != null) {
 					clearInterval(balls);
 				}
+				currentSquare[n] = new Coordinates(units[n].position.getTileY(), units[n].position.getTileX());
 				if (n === selection){
 					units[n].destination = newDestination(event);
 					// Setup the movement animation.
 					startingOrientationX[n] = units[n].XOrientation();
 					startingOrientationY[n] = units[n].YOrientation();
 					unit_velocity[n] = units[n].speed / board.tiles[units[n].position.getTileY()][[units[n].position.getTileX()]].MovementCost();
-					console.log(units[n].position.getTileY() + ", " + units[n].position.getTileX());
-					console.log(unit_velocity);
 					dx[n] = startingOrientationX[n] * unit_velocity[n] * Math.cos(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
 					dy[n] = startingOrientationY[n] * unit_velocity[n] * Math.sin(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
 				}
@@ -201,18 +204,28 @@ function GameWait(units, board) {
 			    drawInfantry();
 			    for (var n = 0; n < units.length; n++) {
 			    	if (units[n].destination != null) {
-			    		if (Math.sign(units[n].destination.x - units[n].position.x) === startingOrientationX[n] || Math.sign(units[n].destination.y - units[n].position.y) === startingOrientationY[n]){
-					    	units[n].position.x += dx[n];
-					    	units[n].position.y += dy[n];
-					    } else {
-					    	units[n].position = units[n].destination;
-					    	units[n].destination = null;
-					    	// clearInterval(balls);
-					    }
+			    		if (sharedSquare(n) === null){
+				    		if (Math.sign(units[n].destination.x - units[n].position.x) === startingOrientationX[n] || Math.sign(units[n].destination.y - units[n].position.y) === startingOrientationY[n]){
+						    	units[n].position.x += dx[n];
+						    	units[n].position.y += dy[n];
+						    	if (squareChange(n)){
+						    		unit_velocity[n] = units[n].speed / board.tiles[units[n].position.getTileY()][[units[n].position.getTileX()]].MovementCost();
+									dx[n] = startingOrientationX[n] * unit_velocity[n] * Math.cos(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
+									dy[n] = startingOrientationY[n] * unit_velocity[n] * Math.sin(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
+									currentSquare[n] = new Coordinates(units[n].position.getTileY(), units[n].position.getTileX());
+						    	}
+						    } else {
+						    	units[n].position = units[n].destination;
+						    	units[n].destination = null;
+						    	// clearInterval(balls);
+						    }
+			    		} else {
+			    			units[n].destination = null;
+			    			units[sharedSquare(n)].destination = null;
+			    			console.log("BATTLE BEGINS!!!");
+			    		}
 			    	}
-			    	
-			    }
-			    
+			    } 
 			}
 
 			function newDestination(event) {
@@ -235,13 +248,30 @@ function GameWait(units, board) {
 				return selection;
 			}
 
+			function sharedSquare(m) {
+				for (var n = 0; n < units.length; n++) {
+					if (n != m && currentSquare[m].x == currentSquare[n].x && currentSquare[m].y == currentSquare[n].y) {
+						return n;
+						break;
+					}
+				}
+				return null;
+			}
+
+			function squareChange(n) {
+				if (units[n].position.getTileY() === currentSquare[n].x && units[n].position.getTileX() === currentSquare[n].y) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+
+
 		});
 	});
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Game Moving Units
+// Game Battle Mode
 //////////////////////////////////////////////////////////////////////////////////////////
-
-
 

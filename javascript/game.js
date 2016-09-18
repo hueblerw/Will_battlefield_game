@@ -129,7 +129,7 @@ function getUnits(players) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Game Event Watching
+// Game Moving Units
 //////////////////////////////////////////////////////////////////////////////////////////
 
 function GameWait(units) {
@@ -141,6 +141,7 @@ function GameWait(units) {
 		var startingOrientationY = [];
 		var dx = [];
 		var dy = [];
+		var unit_velocity = [];
 		var balls;
 		var selection = 0;
 
@@ -150,6 +151,7 @@ function GameWait(units) {
 			startingOrientationY.push(null);
 			dx.push(null);
 			dy.push(null);
+			unit_velocity.push(0.0);
 		}
 
 		$("#board_surface").on('click', function(event) {
@@ -164,8 +166,9 @@ function GameWait(units) {
 					// Setup the movement animation.
 					startingOrientationX[n] = units[n].XOrientation();
 					startingOrientationY[n] = units[n].YOrientation();
-					dx[n] = startingOrientationX[n] * units[n].speed * Math.cos(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
-					dy[n] = startingOrientationY[n] * units[n].speed * Math.sin(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
+					unit_velocity[n] = units[n].speed
+					dx[n] = startingOrientationX[n] * unit_velocity[n] * Math.cos(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
+					dy[n] = startingOrientationY[n] * unit_velocity[n] * Math.sin(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
 				}
 			}
 			// Animate the motion!

@@ -142,7 +142,7 @@ function GameWait(units) {
 		var dx = [];
 		var dy = [];
 		var balls;
-		var selection;
+		var selection = 0;
 
 		// Create empty slots for the units.
 		for (var n = 0; n < units.length; n++){
@@ -154,7 +154,7 @@ function GameWait(units) {
 
 		$("#board_surface").on('click', function(event) {
 			// Get coordinates of destination.
-			selection = 0;
+			selection = changeSelection(event, selection);
 			for (var n = 0; n < units.length; n++) {
 				if (balls != null) {
 					clearInterval(balls);
@@ -205,6 +205,21 @@ function GameWait(units) {
 				var myY = Math.floor(event.clientY / 50) * 50 + 25;
 				return new Coordinates(myX, myY);
 			}
+
+			function changeSelection(event, selection) {
+				var clickX = event.clientX;
+				var clickY = event.clientY;
+				var dist;
+				for (var n = 0; n < units.length; n++){
+					dist = Math.sqrt(Math.pow(units[n].position.x - clickX, 2) + Math.pow(units[n].position.y - clickY, 2));
+					if (dist <= 20){
+						return n;
+						break;
+					}
+				}
+				return selection;
+			}
+
 		});
 	});
 }
@@ -213,8 +228,5 @@ function GameWait(units) {
 // Game Moving Units
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function MoveToDestination(unit, destination) {
-	// set the units new destination.
-	
-}
+
 

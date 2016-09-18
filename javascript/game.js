@@ -134,21 +134,30 @@ function getUnits(players) {
 
 function GameWait(unit) {
 	$(document).ready(function() {
+		// Initialize the variables.
+		var destination;
+		var canvas = document.getElementById("board_surface");
+		var ctx = canvas.getContext("2d");
+		var startingOrientationX;
+		var startingOrientationY;
+		var dx;
+		var dy;
+		var redBall;
+
 		$("#board_surface").on('click', function(event) {
 			// Get coordinates of destination.
-			destination = newDestination(event);
+			clearInterval(redBall);
+			unit.destination = newDestination(event);
 			// Setup the movement animation.
-			unit.destination = destination;
-			var canvas = document.getElementById("board_surface");
-			var ctx = canvas.getContext("2d");
-			var x = unit.position.x;
-			var y = unit.position.y;
-			var dx = unit.XOrientation() * unit.speed * Math.cos(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
-			var dy = unit.YOrientation() * unit.speed * Math.sin(Math.atan(Math.abs(y - unit.destination.y) / Math.abs(x - unit.destination.x)));
+			startingOrientationX = unit.XOrientation();
+			startingOrientationY = unit.YOrientation();
+			dx = startingOrientationX * unit.speed * Math.cos(Math.atan(Math.abs(unit.position.y - unit.destination.y) / Math.abs(unit.position.x - unit.destination.x)));
+			dy = startingOrientationY * unit.speed * Math.sin(Math.atan(Math.abs(unit.position.y - unit.destination.y) / Math.abs(unit.position.x - unit.destination.x)));
+			debugger
 
 			function drawInfantry() {
 			    ctx.beginPath();
-			    ctx.arc(x, y, 20, 0, Math.PI*2);
+			    ctx.arc(unit.position.x, unit.position.y, 20, 0, Math.PI*2);
 			    ctx.fillStyle = unit.player_color;
 			    ctx.fill();
 			    ctx.closePath();
@@ -157,9 +166,11 @@ function GameWait(unit) {
 			function draw() {
 			    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			    drawInfantry();
-			    if (Math.sign(unit.destination.x - x) === unit.XOrientation() || Math.sign(unit.destination.y - y) === unit.YOrientation()){
-			    	x += dx;
-			    	y += dy;
+			    console.log(unit.position);
+			    console.log(dx + ", " + dy);
+			    if (Math.sign(unit.destination.x - unit.position.x) === startingOrientationX || Math.sign(unit.destination.y - unit.position.y) === startingOrientationY){
+			    	unit.position.x += dx;
+			    	unit.position.y += dy;
 			    } else {
 			    	unit.position = unit.destination;
 			    	unit.destination = null;
@@ -173,7 +184,7 @@ function GameWait(unit) {
 				return new Coordinates(myX, myY);
 			}
 
-			var redBall = setInterval(draw, 50);
+			redBall = setInterval(draw, 50);
 		});
 	});
 }

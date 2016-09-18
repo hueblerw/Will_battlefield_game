@@ -21,7 +21,7 @@ function GameLogic() {
 
 	// Wait for clicks upon the units.
 	// Move the red circle across the screen.
-	GameWait(units);
+	GameWait(units, game_board);
 }
 
 // Initialization methods
@@ -132,7 +132,7 @@ function getUnits(players) {
 // Game Moving Units
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function GameWait(units) {
+function GameWait(units, board) {
 	$(document).ready(function() {
 		// Initialize the variables.
 		var canvas = document.getElementById("board_surface");
@@ -166,7 +166,9 @@ function GameWait(units) {
 					// Setup the movement animation.
 					startingOrientationX[n] = units[n].XOrientation();
 					startingOrientationY[n] = units[n].YOrientation();
-					unit_velocity[n] = units[n].speed
+					unit_velocity[n] = units[n].speed / board.tiles[units[n].position.getTileY()][[units[n].position.getTileX()]].MovementCost();
+					console.log(units[n].position.getTileY() + ", " + units[n].position.getTileX());
+					console.log(unit_velocity);
 					dx[n] = startingOrientationX[n] * unit_velocity[n] * Math.cos(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
 					dy[n] = startingOrientationY[n] * unit_velocity[n] * Math.sin(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
 				}

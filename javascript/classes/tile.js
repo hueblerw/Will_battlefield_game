@@ -17,10 +17,10 @@ Tile.prototype.MovementCost = function(){
 
 	switch(this.terrain) {
 	    case "hills":
-	        base *= 2.0;
+	        base *= 1.5;
 	        break;
 	    case "mountains":
-	        base *= 3.0;
+	        base *= 2.0;
 	        break;
 	}
 

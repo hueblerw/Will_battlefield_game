@@ -138,6 +138,7 @@ function PlaceUnits(players, width, height) {
 		canvas.width = width * 50;
 		canvas.height = height * 50;
 		unit_info.style.left = width * 50 + 20;
+		battle_info.style.top = height * 50 + 10;
 
 		for (var k = 0; k < players.length; k++){
 			var troops = players[k].units;
@@ -251,7 +252,7 @@ function GameWait(units, board) {
 			    			units[n].destination = null;
 			    			units[sharedSquare(n)].destination = null;
 			    			var battle_info = document.getElementById("battle_info");
-			    			battle_info.style.display = 'none';
+			    			battle_info.style.display = 'block';
 			    			console.log("BATTLE BEGINS!!!");
 			    		}
 			    	}

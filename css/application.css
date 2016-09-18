@@ -7,3 +7,32 @@ canvas#board_surface {
 	position: fixed;
 	background: transparent; 
 }
+
+#world_dimensions {
+	padding: 20px;
+	border-width: 8px;
+	border-color: blue;
+	border-radius: 2px;
+	border: solid;
+	background-color: lightgray;
+	width: 150px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#world_dimensions input {
+	padding: 4px;
+	width: 80px;
+	height: 40px;
+}
+
+#world_dimensions button {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#world_dimensions form {
+	padding: 5px;
+	border-width: 1px;
+	border: dashed;
+}

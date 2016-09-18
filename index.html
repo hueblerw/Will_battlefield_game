@@ -20,6 +20,15 @@
   <script src="javascript/game.js"></script>
 </head>
 <body>
+  <div id="world_dimensions">
+    <form id="dimension-form">
+      <label for="x-dimension">World Width:</label><br>
+      <input type="number" name="x-dimension" placeholder="10"><br>
+      <label for="y-dimension">World Height:</label><br>
+      <input type="number" name="y-dimension" placeholder="10"><br>
+      <button type="submit">Create Battlefield</button>
+    </form>
+  </div>
   <div id="board_container">
     <canvas id="board_background"></canvas>
     <canvas id="board_surface"></canvas>

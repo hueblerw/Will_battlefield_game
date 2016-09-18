@@ -15,9 +15,9 @@ var Board = function(x, y) {
 	  		} else {
 	  			terrain = "flat";
 	  		}
-	  		if (infoArray[i][j] > 10.0) {
+	  		if (infoArray[i][j] > 6.0) {
 	  			habitat = "swamp";
-	  		} else if (infoArray[i][j] > 6.0) {
+	  		} else if (infoArray[i][j] > 4.0) {
 	  			habitat = "forest";
 	  		}
 	  		tileRow.push(new Tile(terrain, habitat));
@@ -49,7 +49,7 @@ Board.prototype.makeInfoArray = function(x, y) {
 	var bigArray = [];
 	var row = [];
 	// Set the upper left corner.
-	row.push(Math.random() * 10);
+	row.push(Math.random() * 6);
 	// Set the upper left row.
 	for (var k = 1; k < x; k++){
 		row[k] = (Math.random() * 2 - 1) + row[k - 1];

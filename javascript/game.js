@@ -176,11 +176,21 @@ function GameWait(units) {
 
 			function drawInfantry() {
 				for (var n = 0; n < units.length; n++){
+					// Draws the circle at its postion.
 					ctx.beginPath();
 				    ctx.arc(units[n].position.x, units[n].position.y, 20, 0, Math.PI*2);
 				    ctx.fillStyle = units[n].player_color;
 				    ctx.fill();
 				    ctx.closePath();
+				    // Adds a highlighted border around the selected object
+				    if (n === selection) {
+				    	ctx.beginPath();
+					    ctx.arc(units[n].position.x, units[n].position.y, 22, 0, Math.PI*2);
+					    ctx.fillStyle = "yellow";
+					    ctx.stroke();
+					    ctx.closePath();
+				    }
+				    
 				}
 			}
 

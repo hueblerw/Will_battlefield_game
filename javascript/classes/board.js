@@ -1,5 +1,7 @@
 var Board = function(x, y) {
 	this.tiles = [];
+
+	var infoArray = this.makeInfoArray(x, y);
 	var habitat = "plains";
 	var terrain = "";
 	for (var i = 0; i < y; i++){
@@ -12,6 +14,11 @@ var Board = function(x, y) {
 	  			terrain = "hills";
 	  		} else {
 	  			terrain = "flat";
+	  		}
+	  		if (infoArray[i][j] > 10.0) {
+	  			habitat = "swamp";
+	  		} else if (infoArray[i][j] > 6.0) {
+	  			habitat = "forest";
 	  		}
 	  		tileRow.push(new Tile(terrain, habitat));
 	  	}
@@ -36,4 +43,27 @@ Board.prototype.logTheBoard = function(){
 		console.log(row);
 		row = "";
 	}
+}
+
+Board.prototype.makeInfoArray = function(x, y) {
+	var bigArray = [];
+	var row = [];
+	// Set the upper left corner.
+	row.push(Math.random() * 10);
+	// Set the upper left row.
+	for (var k = 1; k < x; k++){
+		row[k] = (Math.random() * 2 - 1) + row[k - 1];
+	}
+	bigArray.push(row);
+	row = [];
+	// Do the remaining rows.
+	for (var i = 1; i < y; i++){
+		row.push((Math.random() * 2 - 1) + bigArray[i - 1][0]);
+		for (var j = 1; j < x; j++){
+			row.push((Math.random() * 2 - 1) + (row[j - 1] + bigArray[i - 1][j]) / 2);
+		}
+		bigArray.push(row);
+		row = [];
+	}
+	return bigArray;
 }

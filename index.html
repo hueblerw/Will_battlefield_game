@@ -23,16 +23,25 @@
   <div id="world_dimensions">
     <form id="dimension-form">
       <label for="x-dimension">World Width:</label><br>
-      <input type="number" name="x-dimension" placeholder="10"><br>
+      <input id="x" type="number" name="x-dimension" value="10"><br>
       <label for="y-dimension">World Height:</label><br>
-      <input type="number" name="y-dimension" placeholder="10"><br>
+      <input id="y" type="number" name="y-dimension" value="10"><br>
       <button type="submit">Create Battlefield</button>
     </form>
   </div>
-  <div id="board_container">
-    <canvas id="board_background"></canvas>
-    <canvas id="board_surface"></canvas>
+  <div id="main_stuff">
+    <div id="board_container">
+      <canvas id="board_background"></canvas>
+      <canvas id="board_surface"></canvas>
+    </div>
+    <div id="unit_info_container">
+      Tables and crap
+    </div>
   </div>
+  <div id="battle_info">
+    Battle Info
+  </div>
+
 
 </body>
 </html>

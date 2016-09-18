@@ -1,9 +1,10 @@
 // Run the Game.
-GameLogic();
+InitializeDivs();
 
-function GameLogic() {
+function GameLogic(x, y) {
+	// Hide stuff and get the board dimensions.
 	// Generate the board.
-	var game_board = GenerateBoard(8, 8);
+	var game_board = GenerateBoard(x, y);
 
 	// Generate two player each owning a single infantry unit of 2500 men with a randomly generated leader.
 	var players = GeneratePlayers(game_board);
@@ -25,6 +26,31 @@ function GameLogic() {
 }
 
 // Initialization methods
+
+function InitializeDivs() {
+	$(document).ready(function(){
+		var dimensionQuestion = document.getElementById("world_dimensions");
+		var backgroundCanvas = document.getElementById("board_background");
+		var canvas = document.getElementById("board_surface");
+		var unit_info = document.getElementById("unit_info_container");
+		var battle_info = document.getElementById("battle_info");
+
+		canvas.style.display = 'none';
+		backgroundCanvas.style.display = 'none';
+		unit_info.style.display = 'none';
+		battle_info.style.display = 'none';
+
+		$("#dimension-form").on('submit', function(event){
+			event.preventDefault();
+			dimensionQuestion.style.display = 'none';
+			canvas.style.display = 'block';
+			backgroundCanvas.style.display = 'block';
+			unit_info.style.display = 'block';
+			GameLogic($("#x").val(), $("#y").val());
+		});
+
+	});
+}
 
 function GenerateBoard(x, y) {
 	var board = new Board(x, y);
@@ -107,9 +133,11 @@ function DisplayBoard(board) {
 function PlaceUnits(players, width, height) {
 	$(document).ready(function(){
 		var canvas = document.getElementById("board_surface");
+		var unit_info = document.getElementById("unit_info_container");
 		var ctx = canvas.getContext("2d");
 		canvas.width = width * 50;
 		canvas.height = height * 50;
+		unit_info.style.left = width * 50 + 20;
 
 		for (var k = 0; k < players.length; k++){
 			var troops = players[k].units;
@@ -222,6 +250,8 @@ function GameWait(units, board) {
 			    		} else {
 			    			units[n].destination = null;
 			    			units[sharedSquare(n)].destination = null;
+			    			var battle_info = document.getElementById("battle_info");
+			    			battle_info.style.display = 'none';
 			    			console.log("BATTLE BEGINS!!!");
 			    		}
 			    	}

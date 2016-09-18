@@ -8,6 +8,10 @@ canvas#board_surface {
 	background: transparent; 
 }
 
+#unit_info_container, #battle_info {
+	position: fixed;
+}
+
 #world_dimensions {
 	padding: 20px;
 	border-width: 8px;

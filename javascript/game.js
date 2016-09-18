@@ -21,7 +21,7 @@ function GameLogic() {
 
 	// Wait for clicks upon the units.
 	// Move the red circle across the screen.
-	GameWait(units[0]);
+	GameWait(units);
 }
 
 // Initialization methods
@@ -132,50 +132,72 @@ function getUnits(players) {
 // Game Event Watching
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function GameWait(unit) {
+function GameWait(units) {
 	$(document).ready(function() {
 		// Initialize the variables.
-		var destination;
 		var canvas = document.getElementById("board_surface");
 		var ctx = canvas.getContext("2d");
-		var startingOrientationX;
-		var startingOrientationY;
-		var dx;
-		var dy;
-		var redBall;
+		var startingOrientationX = [];
+		var startingOrientationY = [];
+		var dx = [];
+		var dy = [];
+		var balls;
+		var selection;
+
+		// Create empty slots for the units.
+		for (var n = 0; n < units.length; n++){
+			startingOrientationX.push(null);
+			startingOrientationY.push(null);
+			dx.push(null);
+			dy.push(null);
+		}
 
 		$("#board_surface").on('click', function(event) {
 			// Get coordinates of destination.
-			clearInterval(redBall);
-			unit.destination = newDestination(event);
-			// Setup the movement animation.
-			startingOrientationX = unit.XOrientation();
-			startingOrientationY = unit.YOrientation();
-			dx = startingOrientationX * unit.speed * Math.cos(Math.atan(Math.abs(unit.position.y - unit.destination.y) / Math.abs(unit.position.x - unit.destination.x)));
-			dy = startingOrientationY * unit.speed * Math.sin(Math.atan(Math.abs(unit.position.y - unit.destination.y) / Math.abs(unit.position.x - unit.destination.x)));
-			debugger
+			selection = 0;
+			for (var n = 0; n < units.length; n++) {
+				if (balls != null) {
+					clearInterval(balls);
+				}
+				if (n === selection){
+					units[n].destination = newDestination(event);
+					// Setup the movement animation.
+					startingOrientationX[n] = units[n].XOrientation();
+					startingOrientationY[n] = units[n].YOrientation();
+					dx[n] = startingOrientationX[n] * units[n].speed * Math.cos(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
+					dy[n] = startingOrientationY[n] * units[n].speed * Math.sin(Math.atan(Math.abs(units[n].position.y - units[n].destination.y) / Math.abs(units[n].position.x - units[n].destination.x)));
+				}
+			}
+			// Animate the motion!
+			balls = setInterval(draw, 50);
 
 			function drawInfantry() {
-			    ctx.beginPath();
-			    ctx.arc(unit.position.x, unit.position.y, 20, 0, Math.PI*2);
-			    ctx.fillStyle = unit.player_color;
-			    ctx.fill();
-			    ctx.closePath();
+				for (var n = 0; n < units.length; n++){
+					ctx.beginPath();
+				    ctx.arc(units[n].position.x, units[n].position.y, 20, 0, Math.PI*2);
+				    ctx.fillStyle = units[n].player_color;
+				    ctx.fill();
+				    ctx.closePath();
+				}
 			}
 
 			function draw() {
 			    ctx.clearRect(0, 0, canvas.width, canvas.height);
 			    drawInfantry();
-			    console.log(unit.position);
-			    console.log(dx + ", " + dy);
-			    if (Math.sign(unit.destination.x - unit.position.x) === startingOrientationX || Math.sign(unit.destination.y - unit.position.y) === startingOrientationY){
-			    	unit.position.x += dx;
-			    	unit.position.y += dy;
-			    } else {
-			    	unit.position = unit.destination;
-			    	unit.destination = null;
-			    	clearInterval(redBall);
+			    for (var n = 0; n < units.length; n++) {
+			    	if (units[n].destination != null) {
+			    		if (Math.sign(units[n].destination.x - units[n].position.x) === startingOrientationX[n] || Math.sign(units[n].destination.y - units[n].position.y) === startingOrientationY[n]){
+					    	units[n].position.x += dx[n];
+					    	units[n].position.y += dy[n];
+					    } else {
+					    	units[n].position = units[n].destination;
+					    	units[n].destination = null;
+					    	// clearInterval(balls);
+					    }
+			    	}
+			    	
 			    }
+			    
 			}
 
 			function newDestination(event) {
@@ -183,8 +205,6 @@ function GameWait(unit) {
 				var myY = Math.floor(event.clientY / 50) * 50 + 25;
 				return new Coordinates(myX, myY);
 			}
-
-			redBall = setInterval(draw, 50);
 		});
 	});
 }

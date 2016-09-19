@@ -63,8 +63,12 @@ function GeneratePlayers(board) {
 	players.push(new Player("Player 1", "red"));
 	players.push(new Player("Player 2", "blue"));
 	var leader = new Leader("Gus", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
-	var unit = new Unit("Red Infantry", "infantry", 2500, leader, "red");
+	var unit = new Unit("1st Red Infantry", "infantry", 2500, leader, "red");
 	unit.position = new Coordinates(25, 25);
+	players[0].units.push(unit);
+	var leader = new Leader("Arnold", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
+	var unit = new Unit("2nd Red Infantry", "infantry", 1000, leader, "red");
+	unit.position = new Coordinates(125, 25);
 	players[0].units.push(unit);
 	leader = new Leader("Sarah", Math.floor(Math.random()*13), Math.floor(Math.random()*13), 0);
 	unit = new Unit("Blue Infantry", "infantry", 2500, leader, "blue");
